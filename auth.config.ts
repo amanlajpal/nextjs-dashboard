@@ -18,5 +18,5 @@ export const authConfig = {
       return true;
     },
   },
-  providers: [Credentials({})], // Add providers with an empty array for now
+  providers: [Credentials({})],
 } satisfies NextAuthConfig;
