@@ -8,6 +8,7 @@ import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -71,6 +72,10 @@ export default function LoginForm() {
         <Button className="mt-4 w-full" aria-disabled={isPending}>
           Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
+        <div className="mt-4 text-center">
+          New here? Create an account and get started!
+          <Link href="/signup" className="ml-1 text-blue-500 hover:underline">Sign Up</Link>
+        </div>
         <div className="flex h-8 items-end space-x-1">
           {errorMessage && (
             <>

@@ -8,6 +8,7 @@ import { useActionState } from "react";
 import { register } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: 'Signup',
@@ -15,8 +16,8 @@ export const metadata: Metadata = {
 
 export default function SignupForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-  const [errorMessage, formAction, isPending] = useActionState(
+  const callbackUrl = searchParams.get("callbackUrl") || "/login";
+  const [state, formAction, isPending] = useActionState(
     register,
     undefined
   );
@@ -45,6 +46,7 @@ export default function SignupForm() {
               />
               <UserIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+            {state?.errors?.name && <p className="text-xs font-medium text-gray-900">{state.errors.name}</p>}
           </div>
           <div>
             <label
@@ -64,6 +66,7 @@ export default function SignupForm() {
               />
               <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+            {state?.errors?.email && <p className="text-xs font-medium text-gray-900">{state.errors.email}</p>}
           </div>
           <div className="mt-4">
             <label
@@ -84,6 +87,12 @@ export default function SignupForm() {
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+            {state?.errors?.password && <div>
+              <p className="text-xs font-medium text-gray-900 mt-2">Password Must:</p>
+              <ul>
+                {state.errors.password.map((error)=><li className="text-xs font-medium text-gray-900" key={error}>- {error}</li>)}  
+              </ul>  
+            </div>}
           </div>
           <div className="mt-4">
             <label
@@ -104,17 +113,27 @@ export default function SignupForm() {
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+            {state?.errors?.password && <div>
+              <p className="text-xs font-medium text-gray-900 mt-2">Password Must:</p>
+              <ul>
+                {state.errors.password.map((error)=><li className="text-xs font-medium text-gray-900" key={error}>- {error}</li>)}  
+              </ul>  
+            </div>}
           </div>
         </div>
         <input type="hidden" name="redirectTo" value={callbackUrl} />
         <Button className="mt-4 w-full" aria-disabled={isPending}>
           Singup <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
+        <div className="mt-4 text-center text-sm font-medium text-gray-900">
+          Welcome back! Log in to continue.
+          <Link href="/login" className="ml-1 text-blue-500 text-sm font-medium hover:underline">Login</Link>
+        </div>
         <div className="flex h-8 items-end space-x-1">
-          {errorMessage && (
+          {state?.message && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <p className="text-sm text-red-500">{state.message}</p>
             </>
           )}
         </div>
