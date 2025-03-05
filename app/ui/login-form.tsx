@@ -72,9 +72,9 @@ export default function LoginForm() {
         <Button className="mt-4 w-full" aria-disabled={isPending}>
           Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
-        <div className="mt-4 text-center">
+        <div className="mt-4 text-center text-sm font-medium text-gray-900">
           New here? Create an account and get started!
-          <Link href="/signup" className="ml-1 text-blue-500 hover:underline">Sign Up</Link>
+          <Link href="/signup" className="ml-1 text-blue-500 text-sm font-medium hover:underline">Sign Up</Link>
         </div>
         <div className="flex h-8 items-end space-x-1">
           {errorMessage && (
