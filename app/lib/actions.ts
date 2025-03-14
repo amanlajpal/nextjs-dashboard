@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { FormState, signIn, signUp } from "@/auth";
 import { AuthError } from "next-auth";
+import { CreateCustomer } from "../ui/customers/buttons";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -27,6 +28,21 @@ export type State = {
     customerId?: string[];
     amount?: string[];
     status?: string[];
+  };
+  message?: string | null;
+};
+
+const CustomerCreateFormSchema = z.object({
+  name: z.string(),
+  email: z.string().email({ message: "Email is invalid." }),
+  imageUrl: z.string().url({ message: "Image Url is invalid" }),
+});
+
+export type CustomerState = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+    imageUrl?: string[];
   };
   message?: string | null;
 };
@@ -115,6 +131,45 @@ export async function deleteInvoice(id: string) {
     console.error(error);
   }
   revalidatePath("/dashboard/invoices");
+}
+
+export async function createCustomer(prevState: CustomerState, formData: FormData) {
+  const rawFormData = {
+    name: formData.get("name"),
+    email: formData.get("email"),
+    imageUrl: formData.get("imageUrl"),
+  };
+  const validatedFields = CustomerCreateFormSchema.safeParse(rawFormData);
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Customer.",
+    };
+  }
+  // Prepare data for insertion into the database
+  const { name, email, imageUrl } = validatedFields.data;
+
+  try {
+    await sql`
+      INSERT INTO customers (name, email, image_url)
+      VALUES (${name}, ${email}, ${imageUrl})
+    `;
+  } catch (error) {
+    console.error(error, "error");
+  }
+
+  revalidatePath("/dashboard/customers");
+  redirect("/dashboard/customers");
+}
+
+export async function deleteCustomer(id: string) {
+  try {
+    await sql`DELETE FROM customers WHERE id = ${id}`;
+  } catch (error) {
+    console.error(error);
+  }
+  revalidatePath("/dashboard/customers");
 }
 
 export async function authenticate(
