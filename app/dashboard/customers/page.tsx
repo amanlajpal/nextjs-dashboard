@@ -1,4 +1,4 @@
-import { fetchFilteredCustomers } from "@/app/lib/data";
+import { fetchCustomersPages, fetchFilteredCustomers } from "@/app/lib/data";
 import CustomersTable from "@/app/ui/customers/table";
 import { Metadata } from "next";
 
@@ -14,7 +14,7 @@ export default async function Page(props: {
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
-  const currentPage = searchParams?.page || 1;
-  const customers = await fetchFilteredCustomers(query);
-  return <CustomersTable customers={customers} />;
+  const currentPage = +(searchParams?.page || 1);
+  const totalPages = await fetchCustomersPages(query);
+  return <CustomersTable query={query} totalPages={totalPages} currentPage={currentPage}/>;
 }

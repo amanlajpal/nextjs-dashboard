@@ -4,12 +4,21 @@ import Search from '@/app/ui/search';
 import {
   FormattedCustomersTable,
 } from '@/app/lib/definitions';
+import { fetchFilteredCustomers } from '@/app/lib/data';
+import Pagination from '../invoices/pagination';
 
 export default async function CustomersTable({
-  customers,
+  query,
+  totalPages,
+  currentPage,
 }: {
-  customers: FormattedCustomersTable[];
+  query: string;
+  totalPages: number;
+  currentPage: number;
 }) {
+
+  const customers: FormattedCustomersTable[] = await fetchFilteredCustomers(query, currentPage);
+
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
@@ -116,6 +125,9 @@ export default async function CustomersTable({
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );
