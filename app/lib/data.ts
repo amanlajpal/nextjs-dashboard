@@ -204,6 +204,7 @@ export async function fetchCustomersPages(query: string) {
 
 export async function fetchFilteredCustomers(query: string, page: number = 1) {
   const offset = (page - 1) * ITEMS_PER_PAGE;
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   try {
     const data = await sql<CustomersTableType>`
 		SELECT

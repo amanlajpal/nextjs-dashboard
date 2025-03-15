@@ -139,6 +139,37 @@ export function TableRowSkeleton() {
   );
 }
 
+export function CustomersTableRowSkeleton() {
+  return (
+    <tr className="group">
+      <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-8 rounded-full bg-gray-100"></div>
+          <div className="h-6 w-24 rounded bg-gray-100"></div>
+        </div>
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+        <div className="h-6 w-32 rounded bg-gray-100"></div>
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+        <div className="h-6 w-16 rounded bg-gray-100"></div>
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+        <div className="h-6 w-16 rounded bg-gray-100"></div>
+      </td>
+      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm ">
+        <div className="h-6 w-16 rounded bg-gray-100"></div>
+      </td>
+      <td className="whitespace-nowrap bg-white py-3 pl-6 pr-3 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
+        <div className="flex justify-end gap-3">
+          <div className="h-[38px] w-[38px] rounded bg-gray-100"></div>
+          <div className="h-[38px] w-[38px] rounded bg-gray-100"></div>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
 export function InvoicesMobileSkeleton() {
   return (
     <div className="mb-2 w-full rounded-md bg-white p-4">
@@ -166,22 +197,35 @@ export function InvoicesMobileSkeleton() {
 export function CustomersMobileSkeleton() {
   return (
     <div className="mb-2 w-full rounded-md bg-white p-4">
-      <div className="flex items-center justify-between border-b border-gray-100 pb-8">
-        <div className="flex items-center">
-          <div className="mr-2 h-8 w-8 rounded-full bg-gray-100"></div>
-          <div className="h-6 w-16 rounded bg-gray-100"></div>
-        </div>
-        <div className="h-6 w-16 rounded bg-gray-100"></div>
-      </div>
-      <div className="flex w-full items-center justify-between pt-4">
+      <div className="flex items-center justify-between border-b pb-4">
         <div>
-          <div className="h-6 w-16 rounded bg-gray-100"></div>
+          <div className="mb-2 flex items-center">
+            <div className="flex items-center gap-3">
+              <div className="mr-2 h-8 w-8 rounded-full bg-gray-100"></div>
+              <div className="h-6 w-16 rounded bg-gray-100"></div>
+            </div>
+          </div>
+          <p className="text-sm text-gray-500">
+            <div className="h-4 w-24 rounded bg-gray-100"></div>
+          </p>
+        </div>
+        <div className="flex justify-end gap-3">
+          <div className="h-[38px] w-[38px] rounded bg-gray-100"></div>
+          <div className="h-[38px] w-[38px] rounded bg-gray-100"></div>
+        </div>
+      </div>
+      <div className="flex w-full items-center justify-between border-b py-5">
+        <div className="flex w-1/2 flex-col">
+          <div className="h-4 w-16 rounded bg-gray-100"></div>
           <div className="mt-2 h-6 w-24 rounded bg-gray-100"></div>
         </div>
-        <div className="flex justify-end gap-2">
-          <div className="h-10 w-10 rounded bg-gray-100"></div>
-          <div className="h-10 w-10 rounded bg-gray-100"></div>
+        <div className="flex w-1/2 flex-col">
+          <div className="h-4 w-16 rounded bg-gray-100"></div>
+          <div className="mt-2 h-6 w-24 rounded bg-gray-100"></div>
         </div>
+      </div>
+      <div className="pt-4 text-sm">
+        <div className="h-4 w-16 rounded bg-gray-100"></div>
       </div>
     </div>
   );
@@ -275,12 +319,12 @@ export function CustomersTableSkeleton() {
               </tr>
             </thead>
             <tbody className="bg-white">
-              <TableRowSkeleton />
-              <TableRowSkeleton />
-              <TableRowSkeleton />
-              <TableRowSkeleton />
-              <TableRowSkeleton />
-              <TableRowSkeleton />
+              <CustomersTableRowSkeleton />
+              <CustomersTableRowSkeleton />
+              <CustomersTableRowSkeleton />
+              <CustomersTableRowSkeleton />
+              <CustomersTableRowSkeleton />
+              <CustomersTableRowSkeleton />
             </tbody>
           </table>
         </div>
