@@ -205,9 +205,7 @@ export function CustomersMobileSkeleton() {
               <div className="h-6 w-16 rounded bg-gray-100"></div>
             </div>
           </div>
-          <p className="text-sm text-gray-500">
-            <div className="h-4 w-24 rounded bg-gray-100"></div>
-          </p>
+          <div className="h-4 w-24 rounded bg-gray-100"></div>
         </div>
         <div className="flex justify-end gap-3">
           <div className="h-[38px] w-[38px] rounded bg-gray-100"></div>
