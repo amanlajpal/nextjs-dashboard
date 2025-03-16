@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { FormState, signIn, signUp } from "@/auth";
 import { AuthError } from "next-auth";
-import { CreateCustomer } from "../ui/customers/buttons";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
