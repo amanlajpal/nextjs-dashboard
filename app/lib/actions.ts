@@ -32,10 +32,11 @@ export type State = {
   message?: string | null;
 };
 
-const CustomerCreateFormSchema = z.object({
+const CustomerFormSchema = z.object({
+  id: z.string(),
   name: z.string(),
   email: z.string().email({ message: "Email is invalid." }),
-  imageUrl: z.string().url({ message: "Image Url is invalid" }),
+  imageUrl: z.string(),
 });
 
 export type CustomerState = {
@@ -46,6 +47,8 @@ export type CustomerState = {
   };
   message?: string | null;
 };
+const CustomerCreateFormSchema = CustomerFormSchema
+const CustomerEditFormSchema = CustomerFormSchema.omit({ id: true}); 
 
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 
@@ -157,6 +160,34 @@ export async function createCustomer(prevState: CustomerState, formData: FormDat
     `;
   } catch (error) {
     console.error(error, "error");
+  }
+
+  revalidatePath("/dashboard/customers");
+  redirect("/dashboard/customers");
+}
+
+export async function updateCustomer(customer_id: string, prevState: CustomerState, formData: FormData) {
+  const validatedFields = CustomerEditFormSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    imageUrl: formData.get("imageUrl"),
+  });
+  if(!validatedFields.success){
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Update Customer."
+    }
+  }
+  const { name, email, imageUrl } = validatedFields.data;
+
+  try {
+    await sql`
+      UPDATE customers
+      SET name = ${name}, email = ${email}, image_url = ${imageUrl}
+      WHERE id = ${customer_id}
+    `;
+  } catch {
+    return { message: 'Database Error: Failed to Update Customer.' };
   }
 
   revalidatePath("/dashboard/customers");
