@@ -1,0 +1,35 @@
+.card {
+    position: relative;
+}
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+.card:hover:after, .card:hover:before {
+    content: '';
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+    position: absolute;
+    inset: -6px;
+    padding: 3px;
+    background: conic-gradient(from var(--angle), #ff4500, #d3f340, #7bee85, #afeeee, #7bee85, #ff4500);
+    z-index: -1;
+    border-radius: 13px;
+    animation: rotate 2s linear infinite;
+    opacity: 0.5;
+}
+
+
+.card:hover:before {
+    filter: blur(10px);
+}
+
+@keyframes rotate {
+    0% {
+        --angle: 0deg;
+    }
+    100% {
+        --angle: 360deg;
+    }
+}
