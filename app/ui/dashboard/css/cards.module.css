@@ -8,10 +8,10 @@
 }
 .card:hover:after, .card:hover:before {
     content: '';
-    width: calc(100% + 12px);
-    height: calc(100% + 12px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
     position: absolute;
-    inset: -6px;
+    inset: -2px;
     padding: 3px;
     background: conic-gradient(from var(--angle), #ff4500, #d3f340, #7bee85, #afeeee, #7bee85, #ff4500);
     z-index: -1;
@@ -22,7 +22,7 @@
 
 
 .card:hover:before {
-    filter: blur(10px);
+    filter: blur(3px);
 }
 
 @keyframes rotate {
